@@ -306,3 +306,57 @@ window.addEventListener("scroll", () => {
 
 render();
 ```
+
+## Classes
+
+Introduced in ES6, classes are syntactic sugar over constructor functions and prototypes.
+
+```js
+class Person {
+  constructor(name, age) {
+    this.name = name;
+    this.age = age;
+  }
+
+  // Method
+  greet() {
+    console.log(`Hello, my name is ${this.name}`);
+  }
+
+  // Static method (called on the class, not instances)
+  static species() {
+    return "Homo sapiens";
+  }
+}
+
+// Create instance
+const jane = new Person("Jane", 25);
+jane.greet(); // "Hello, my name is Jane"
+console.log(Person.species()); // "Homo sapiens"
+```
+
+Inheritance
+
+```js
+class Employee extends Person {
+  #ssn; // private field
+
+  constructor(name, age, role) {
+    super(name, age); // call parent constructor
+    this.role = role;
+  }
+
+  work() {
+    console.log(`${this.name} is working as ${this.role}`);
+  }
+
+  // private method
+  #log() {
+    console.log(this.#count);
+  }
+}
+
+const bob = new Employee("Bob", 30, "Developer");
+bob.greet(); // inherited method
+bob.work(); // "Bob is working as Developer"
+```
