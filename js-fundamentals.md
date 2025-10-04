@@ -188,6 +188,25 @@ newDiv.addEventListener("click", () => {
 });
 ```
 
+## Document fragment
+
+DocumentFragment is a useful DOM feature for improving performance when manipulating multiple nodes.
+
+A lightweight, in-memory container for DOM nodes.It is not part of the main DOM tree, so operations on it don’t trigger reflows or repaints. When you append it to the DOM, its children are inserted, but the fragment itself disappears.
+
+```js
+const fragment = document.createDocumentFragment();
+
+for (let i = 1; i <= 5; i++) {
+  const li = document.createElement("li");
+  li.textContent = `Item ${i}`;
+  fragment.appendChild(li);
+}
+
+// Append all at once to the DOM
+document.getElementById("list").appendChild(fragment);
+```
+
 ## Observers
 
 ### 1. MutationObserver
