@@ -152,6 +152,42 @@ Communication happens via message passing (postMessage / onmessage) — no share
 
 In the DOM, when an event happens on an element, it first executes the handler on that element. It goes up each parent, executing all the handlers on the way until it reaches the document root. It will bubble up like this unless stopped with stopPropagation.
 
+## Manipulating nodes
+
+```js
+// Selection
+document.querySelector("#header");
+document.querySelectorAll(".item");
+
+// Creation
+document.createElement("div");
+
+// Inserting
+container.appendChild(newDiv);
+
+// Updating
+// Change text or HTML
+newDiv.textContent = "Updated text";
+newDiv.innerHTML = "<strong>Bold</strong>";
+
+// Change attributes
+newDiv.setAttribute("data-id", "123");
+newDiv.id = "newDiv";
+
+// Change styles
+newDiv.style.color = "red";
+newDiv.style.backgroundColor = "yellow";
+
+// Removal
+container.removeChild(newDiv);
+newDiv.remove(); // modern way
+
+// Event handling
+newDiv.addEventListener("click", () => {
+  console.log("Div clicked!");
+});
+```
+
 ## Observers
 
 ### 1. MutationObserver
@@ -225,4 +261,29 @@ const observer = new ResizeObserver((entries) => {
 
 const box = document.querySelector(".box");
 observer.observe(box);
+```
+
+## Virtual rendering
+
+Render only part of a large list to improve performance.
+
+```js
+const items = Array.from({ length: 10000 }, (_, i) => `Item ${i}`);
+const visibleCount = 20; // number of items in viewport
+let startIndex = 0;
+
+function render() {
+  const visibleItems = items.slice(startIndex, startIndex + visibleCount);
+  document.getElementById("list").innerHTML = visibleItems
+    .map((i) => `<div>${i}</div>`)
+    .join("");
+}
+
+// on scroll
+window.addEventListener("scroll", () => {
+  startIndex = Math.floor(window.scrollY / ITEM_HEIGHT);
+  render();
+});
+
+render();
 ```
